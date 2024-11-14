@@ -1,0 +1,30 @@
+version: "3"
+services:
+  metasploitable2:
+    build:
+      context: ./metasploitable2
+      dockerfile: Dockerfile
+    container_name: metasploitable2
+    ports:
+      - "2222:22" # SSH
+      - "8080:80" # HTTP
+      - "2121:21" # FTP
+      - "3306:3306" # MySQL
+    platform: linux/amd64
+    # volumes:
+    # - ./Metasploitable2/logs/:/var/log/
+    networks:
+      - lab-network
+
+  kali:
+    build:
+      context: ./kali
+      dockerfile: Dockerfile
+    container_name: kali
+    tty: true
+    networks:
+      - lab-network
+
+networks:
+  lab-network:
+    driver: bridge
